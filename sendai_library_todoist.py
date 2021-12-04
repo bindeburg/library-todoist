@@ -11,8 +11,8 @@ import configparser
 import os
 
 # メールアドレスとパスワードの指定
-USER = "0009808049"
-PASS = "Bruckner5th"
+USER = ""
+PASS = ""
 
 # ログイン情報
 login_info = {
@@ -51,7 +51,7 @@ cut_duelist = [x.text.replace('\n', ' ') for x in raw_duelist]
 duelist_0 = []
 duelist = []
 for x in cut_duelist:
-    x = re.findall('返却期限日:\d+/\d+/\d+', x)
+    x = re.findall('返却期限日:\s+\d+/\d+/\d+', x)
     duelist_0 += x
 for x in duelist_0:
     x = re.findall('\d+/\d+/\d+', x)
@@ -62,7 +62,7 @@ book_dict = dict(zip(booklist, duelist))
 print(book_dict)
 
 #TodoistのAPI読み込み
-api = todoist.TodoistAPI('9ec420d4a956e8ebd25af7d7b58fd3e58b86b40d')
+api = todoist.TodoistAPI('API')
 api.sync()
 
 #Todoistのタスクと照合
@@ -70,6 +70,6 @@ api.sync()
 #Todoistにタスク追加
 for x, y in book_dict.items():
     y = y.replace('/', '-')
-    item = api.items.add(x, project_id=2210710301, due={
-                         "date": y}, labels=[2156943584])
+    item = api.items.add(x, project_id=, due={
+                         "date": y}, labels=[])
     api.commit()
